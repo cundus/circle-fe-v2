@@ -1,8 +1,15 @@
 import { Box, Container } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import { useAppSelector } from "../store";
 
 const RootLayout = () => {
+   const isLogin = useAppSelector((state) => state.auth.isLogin);
+
+   if (!isLogin) {
+      return <Navigate to="/auth/login" />;
+   }
+
    return (
       <Box className="container">
          <Container

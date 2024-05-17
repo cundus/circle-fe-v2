@@ -3,23 +3,28 @@ import { useEffect, useState } from "react";
 import ThreadCard from "../../components/common/ThreadCard";
 import { getThreads } from "../../lib/api/call/thread";
 import { IThread } from "../../types/app";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { getThreadsAsync } from "../../store/async/threadAsync";
 
 const Home = () => {
-   const [thread, setThread] = useState<IThread[]>([]);
+   // const [thread, setThread] = useState<IThread[]>([]);
 
-   const fetchThread = async () => {
-      try {
-         const { data } = await getThreads();
+   // const fetchThread = async () => {
+   //    try {
+   //       const { data } = await getThreads();
 
-         console.log(data);
-         setThread(data.data);
-      } catch (error) {
-         console.log(error);
-      }
-   };
+   //       console.log(data);
+   //       setThread(data.data);
+   //    } catch (error) {
+   //       console.log(error);
+   //    }
+   // };
+
+   const thread = useAppSelector((state) => state.thread.thread);
+   const dispatch = useAppDispatch();
 
    useEffect(() => {
-      fetchThread();
+      dispatch(getThreadsAsync());
    }, []);
 
    return (
